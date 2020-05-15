@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace ImageFolderToGrid.Programs {
     class ImageSharpProgram : IProgram {
 
-        //.\ImageFolderToGrid.exe program="imagesharp" inputpath="drive:\path\to\input" outputpath="drive:\path\to\output" program="netcore" width=480 cellwidth=32 cellheight=32 sigma=4.5 radius=2 resamplerid=1
+        //.\ImageFolderToGrid.exe program="imagesharp" inputpath="drive:\path\to\input" outputpath="drive:\path\to\output" width=480 cellwidth=32 cellheight=32 sigma=4.5 radius=2 resamplerid=1
 
         /// <summary>
         /// Using the supplied arguments, will load all the images in a folder, create a new image and put all the images in the input folder in a grid manner, then save the new image to the output folder with the output name.
@@ -20,7 +20,7 @@ namespace ImageFolderToGrid.Programs {
         /// *sigma=4.5
         /// *radius=2
         /// *resamplerid=1
-        /// See <see cref="System.Drawing.Drawing2D.InterpolationMode"/> for more information on interpolation mode.
+        /// See <see cref="GetResampler(int)"/> for more information on resamplers.
         /// </summary>
         /// <param name="arguments">Preprocessed arguments from the command line.</param>
         public void Main(Dictionary<string, string> arguments) {

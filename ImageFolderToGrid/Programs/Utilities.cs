@@ -29,23 +29,25 @@ namespace ImageFolderToGrid.Programs {
             return arguments;
         }
 
-        public static List<string> LoadImages(string folderPath) {
-            //TODO: consider recursively go down other folders inside the folder
-
-            if (!Directory.Exists(folderPath)) {
-                return null;
-            }
-
-            string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
+        public static List<string> LoadImages(string folderPaths) {
             List<string> output = new List<string>();
-            foreach (string file in files) {
-                if (File.Exists(file)) {
-                    string ext = Path.GetExtension(file);
-                    if (ext.Equals(".bmp", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".png", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".jpg", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".jpeg", StringComparison.InvariantCultureIgnoreCase)) { //TODO: add more formats
-                        output.Add(file);
+
+            foreach (string folderPath in folderPaths.Split(';', StringSplitOptions.RemoveEmptyEntries)) {
+                if (!Directory.Exists(folderPath)) {
+                    return null;
+                }
+
+                string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
+                foreach (string file in files) {
+                    if (File.Exists(file)) {
+                        string ext = Path.GetExtension(file);
+                        if (ext.Equals(".bmp", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".png", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".jpg", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".jpeg", StringComparison.InvariantCultureIgnoreCase)) { //TODO: add more formats
+                            output.Add(file);
+                        }
                     }
                 }
             }
+
             return output;
         }
 

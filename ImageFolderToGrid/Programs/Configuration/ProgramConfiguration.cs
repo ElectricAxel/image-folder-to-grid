@@ -68,13 +68,19 @@ namespace ImageFolderToGrid.Programs.Configuration {
                 OutputFileName = Path.GetFileNameWithoutExtension(arguments[ArgumentConfiguration.OutputFileArg]);
             }
 
-            OutputFileName += ".png";
+            string suffix = ".png";
+            string outputFilePath;
 
-            string outputFilePath = Path.Combine(OutputPath, OutputFileName);
+            //don't want an infinite loop
+            for (int i = 1; i <= 21; ++i) {
+                outputFilePath = Path.Combine(OutputPath, OutputFileName + suffix);
 
-            if (File.Exists(outputFilePath)) {
-                Console.WriteLine($"Output file '{OutputFileName}' already exists.");
-                return;
+                if (!File.Exists(outputFilePath)) {
+                    OutputFileName += suffix;
+                    break;
+                }
+
+                suffix = $" ({i}).png";
             }
 
             if (arguments.ContainsKey(ArgumentConfiguration.WidthArg)) {

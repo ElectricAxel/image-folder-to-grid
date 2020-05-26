@@ -2,16 +2,17 @@
 using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ImageFolderToGrid.Programs {
     class ImageSharpProgram : IProgram {
 
-        //.\ImageFolderToGrid.exe program="imagesharp" inputpath="drive:\path\to\input" outputpath="drive:\path\to\output" width=480 cellwidth=32 cellheight=32 sigma=4.5 radius=2 resamplerid=1
+        //.\ImageFolderToGrid.exe program="imagesharp" inputpath="drive:\path\to\input;drive:\path\to\input2;drive:\path\to\input3" outputpath="drive:\path\to\output" outputfile="OutputGrid" width=480 cellwidth=32 cellheight=32 sigma=4.5 radius=2 resamplerid=1 skipalphapixel=1
 
         /// <summary>
-        /// Using the supplied arguments, will load all the images in a folder, create a new image and put all the images in the input folder in a grid manner, then save the new image to the output folder with the output name.
+        /// Using the supplied arguments, will recursively load all the images in all the semicolon separated folders, create a new image and put all the images in a grid manner, then save the new image to the output folder with the output name.
         /// Arguments (the ones marked with * are optional): 
-        /// inputpath=drive:\path\to\input
+        /// inputpath=drive:\path\to\input;drive:\path\to\input2;drive:\path\to\input3
         /// outputpath=drive:\path\to\output
         /// *outputfile=OutputGrid
         /// *width=520
@@ -20,6 +21,7 @@ namespace ImageFolderToGrid.Programs {
         /// *sigma=4.5
         /// *radius=2
         /// *resamplerid=1
+        /// *skipalphapixel=1
         /// See <see cref="GetResampler(int)"/> for more information on resamplers.
         /// </summary>
         /// <param name="arguments">Preprocessed arguments from the command line.</param>
@@ -47,9 +49,21 @@ namespace ImageFolderToGrid.Programs {
             //These images are guaranteed to exist and have the image extension, but the file could be corrupted...
 
             List<Image> images = new List<Image>();
+            Image<SixLabors.ImageSharp.PixelFormats.Rgba32> temp;
 
             foreach (string path in imagePaths) {
-                images.Add(Image.Load(path));
+                temp = Image.Load<SixLabors.ImageSharp.PixelFormats.Rgba32>(path);
+
+                //Skip images whose corner pixels are 100% transparent.
+                if (config.SkipAlphaPixel) {
+                    if (temp[0, 0].A == 0) continue;
+                    int w = temp.Width - 1, h = temp.Height - 1;
+                    if(temp[w, 0].A == 0) continue;
+                    if(temp[0, h].A == 0) continue;
+                    if(temp[w, h].A == 0) continue;
+                }
+
+                images.Add(temp);
             }
 
             Image result = MergeImageInGrid(images, config.OutputWidth, config.CellWidth, config.CellHeight, config.Sigma, config.Radius, config.ResamplerId);
@@ -167,6 +181,7 @@ namespace ImageFolderToGrid.Programs {
             public float Sigma { get; set; }
             public int Radius { get; set; }
             public int ResamplerId { get; set; }
+            public bool SkipAlphaPixel { get; set; }
 
             /// <summary>
             /// Sets the known default values.
@@ -175,6 +190,7 @@ namespace ImageFolderToGrid.Programs {
                 Sigma = 4.5f;
                 Radius = 2;
                 ResamplerId = 1;
+                SkipAlphaPixel = true;
             }
 
             /// <summary>
@@ -203,6 +219,14 @@ namespace ImageFolderToGrid.Programs {
                     }
                 }
 
+                if (arguments.ContainsKey(ImageSharpArgumentConfiguration.SkipAlphaPixelArg)) {
+                    if (int.TryParse(arguments[ImageSharpArgumentConfiguration.SkipAlphaPixelArg], out int tempInt)) {
+                        SkipAlphaPixel = tempInt == 1;
+                    } else if (bool.TryParse(arguments[ImageSharpArgumentConfiguration.SkipAlphaPixelArg], out bool tempBool)) {
+                        SkipAlphaPixel = tempBool;
+                    }
+                }
+
             }
         }
 
@@ -213,6 +237,7 @@ namespace ImageFolderToGrid.Programs {
             public static string SigmaArg = "sigma";
             public static string RadiusArg = "radius";
             public static string ResamplerIdArg = "resamplerid";
+            public static string SkipAlphaPixelArg = "skipalphapixel";
         }
     }
 }

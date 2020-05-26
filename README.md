@@ -21,8 +21,8 @@ games.
 # Solution
 The solution is as simple as the idea. It was made in a console app so it
 could be easily automated, it'd take AT LEAST a program, an input folder, and
-an output folder. It'd scan the folder for images, resize each one, and
-position them using a simple formula that puts them one by one horizontally,
+an output folder. It'd recursively scan the folder for images, resize each one,
+and position them using a simple formula that puts them one by one horizontally,
 and wraps back to the first cell on the next row when a row is complete.
 
 # Parameters
@@ -31,11 +31,12 @@ but not all of them, here are two examples and their descriptions:
 
 # Net Core program:
 ```
-.\ImageFolderToGrid.exe program="netcore" inputpath="drive:\path\to\input" outputpath="drive:\path\to\output" width=480 cellwidth=32 cellheight=32 interpolationmode=7
+.\ImageFolderToGrid.exe program="netcore" inputpath="drive:\path\to\input;drive:\path\to\input2;drive:\path\to\input3" outputpath="drive:\path\to\output" outputfile="OutputGrid" width=480 cellwidth=32 cellheight=32 interpolationmode=7
 ```
 * Program: specifies which of the two programs to use to process the images, in this case netcore.
-* Input Path: path to the folder with all the images in it.
+* Input Path: path to the folders with all the images in it. Can be a single folder or a semi colon separated list.
 * Output Path: which folder the output image containing the grid will be saved to.
+* Output File: name of the output file, without the extension.
 * Width: width of the grid in the output file.
 * Cell Width: width of each cell in the grid. It is possible that the width is not multiple of the cell width, in which case there will be empty space at the end of the row.
 * Cell Height: the height of each cell. This is also used to calculate the height of the resulting image.
@@ -56,14 +57,16 @@ public enum InterpolationMode {
 
 # ImageSharp program:
 ```
-.\ImageFolderToGrid.exe program="imagesharp" inputpath="drive:\path\to\input" outputpath="drive:\path\to\output" program="netcore" width=480 cellwidth=32 cellheight=32 sigma=4.5 radius=2 resamplerid=1
+.\ImageFolderToGrid.exe program="imagesharp" inputpath="drive:\path\to\input;drive:\path\to\input2;drive:\path\to\input3" outputpath="drive:\path\to\output" outputfile="OutputGrid" program="netcore" width=480 cellwidth=32 cellheight=32 sigma=4.5 radius=2 resamplerid=1 skipalphapixel=1
 ```
 * Program: specifies which of the two programs to use to process the images, in this case imagesharp.
-* Input Path: path to the folder with all the images in it.
+* Input Path: path to the folders with all the images in it. Can be a single folder or a semi colon separated list.
 * Output Path: which folder the output image containing the grid will be saved to.
+* Output File: name of the output file, without the extension.
 * Width: width of the grid in the output file.
 * Cell Width: width of each cell in the grid. It is possible that the width is not multiple of the cell width, in which case there will be empty space at the end of the row.
 * Cell Height: the height of each cell. This is also used to calculate the height of the resulting image.
 * Sigma: this is one of the two values used by the Gaussian Sharpening Processor. Default in the source is 9.0, but for my purposes default is 4.5
 * Radius: the other value used by Gaussian Sharpening Processor. Default in the source is 3, but for my purposes default is 2
 * ResamplerId: There are 14 different resamplers that are used when expanding and shrinking the images. The default one is Bicubic.
+* SkipAlphaPixel: true by default, the ImageSharp program will skip images with Alpha=0 pixels in any of the four corners.

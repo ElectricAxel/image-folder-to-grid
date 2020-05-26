@@ -5,12 +5,12 @@ using System.Drawing;
 namespace ImageFolderToGrid.Programs {
     public class NetCoreProgram : IProgram {
 
-        //.\ImageFolderToGrid.exe program="netcore" inputpath="drive:\path\to\input" outputpath="drive:\path\to\output" width=480 cellwidth=32 cellheight=32 interpolationmode=7
+        //.\ImageFolderToGrid.exe program="netcore" inputpath="drive:\path\to\input;drive:\path\to\input2;drive:\path\to\input3" outputpath="drive:\path\to\output" outputfile="OutputGrid" width=480 cellwidth=32 cellheight=32 interpolationmode=7
 
         /// <summary>
         /// Using the supplied arguments, will load all the images in a folder, create a new image and put all the images in the input folder in a grid manner, then save the new image to the output folder with the output name.
         /// Arguments (the ones marked with * are optional): 
-        /// inputpath=drive:\path\to\input
+        /// inputpath=drive:\path\to\input;drive:\path\to\input2;drive:\path\to\input3
         /// outputpath=drive:\path\to\output
         /// *outputfile=OutputGrid
         /// *width=520

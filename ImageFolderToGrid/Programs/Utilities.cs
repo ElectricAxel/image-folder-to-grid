@@ -36,7 +36,7 @@ namespace ImageFolderToGrid.Programs {
                 return null;
             }
 
-            string[] files = Directory.GetFiles(folderPath);
+            string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
             List<string> output = new List<string>();
             foreach (string file in files) {
                 if (File.Exists(file)) {

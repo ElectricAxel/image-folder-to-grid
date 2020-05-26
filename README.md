@@ -9,9 +9,9 @@ While making this project I used 2 NuGet Packages:
   [GNU Affero General Public License v3](https://www.gnu.org/licenses/agpl-3.0).
 
 # Conception
-The idea for this project came from a friend that is developing an Online RPG.
-They mentioned it while talking with their chat during a stream, and I thought
-it'd be fun to make. 
+The idea for this project came from a friend that is developing an Online RPG
+called [AetherStory](https://www.aetherstory.com/) . They mentioned it while
+talking with their chat during a stream, and I thought it'd be fun to make.
 
 # Purpose
 The idea was that you'd have a folder full of images, and you'd want to spread

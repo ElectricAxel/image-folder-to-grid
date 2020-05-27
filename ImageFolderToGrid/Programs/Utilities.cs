@@ -37,18 +37,27 @@ namespace ImageFolderToGrid.Programs {
                     return null;
                 }
 
-                string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
-                foreach (string file in files) {
-                    if (File.Exists(file)) {
-                        string ext = Path.GetExtension(file);
-                        if (ext.Equals(".bmp", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".png", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".jpg", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".jpeg", StringComparison.InvariantCultureIgnoreCase)) { //TODO: add more formats
-                            output.Add(file);
-                        }
+                _LoadImagesHelper(folderPath, output);
+            }
+
+            return output;
+        }
+
+        private static void _LoadImagesHelper(string folderPath, List<string> output) {
+            string[] files = Directory.GetFiles(folderPath);
+            foreach (string file in files) {
+                if (File.Exists(file)) {
+                    string ext = Path.GetExtension(file);
+                    if (ext.Equals(".bmp", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".png", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".jpg", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".jpeg", StringComparison.InvariantCultureIgnoreCase)) { //TODO: add more formats
+                        output.Add(file);
                     }
                 }
             }
 
-            return output;
+            string[] subFolders = Directory.GetDirectories(folderPath);
+            foreach (string subFolder in subFolders) {
+                _LoadImagesHelper(subFolder, output);
+            }
         }
 
     }

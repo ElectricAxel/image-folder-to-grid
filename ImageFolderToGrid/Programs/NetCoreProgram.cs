@@ -90,6 +90,7 @@ namespace ImageFolderToGrid.Programs {
             Image grid = new Bitmap(imageWidth, gridHeight);
 
             using (Graphics graphics = Graphics.FromImage(grid)) {
+                graphics.Clear(Color.Black);
                 graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
                 graphics.InterpolationMode = interpolationMode;
                 graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;

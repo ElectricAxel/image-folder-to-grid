@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageFolderToGrid", "ImageFolderToGrid\ImageFolderToGrid.csproj", "{8D5A282A-7CA6-483F-97A3-80C3D8646289}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageFolderToGrid", "ImageFolderToGrid\ImageFolderToGrid.csproj", "{8D5A282A-7CA6-483F-97A3-80C3D8646289}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageDeleter", "ImageDeleter\ImageDeleter.csproj", "{805C9B01-2AAC-4DF0-A31E-355B8C9EE79A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8D5A282A-7CA6-483F-97A3-80C3D8646289}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D5A282A-7CA6-483F-97A3-80C3D8646289}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D5A282A-7CA6-483F-97A3-80C3D8646289}.Release|Any CPU.Build.0 = Release|Any CPU
+		{805C9B01-2AAC-4DF0-A31E-355B8C9EE79A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{805C9B01-2AAC-4DF0-A31E-355B8C9EE79A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{805C9B01-2AAC-4DF0-A31E-355B8C9EE79A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{805C9B01-2AAC-4DF0-A31E-355B8C9EE79A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

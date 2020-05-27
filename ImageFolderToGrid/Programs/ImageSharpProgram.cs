@@ -7,7 +7,7 @@ using System.IO;
 namespace ImageFolderToGrid.Programs {
     class ImageSharpProgram : IProgram {
 
-        //.\ImageFolderToGrid.exe program="imagesharp" inputpath="drive:\path\to\input;drive:\path\to\input2;drive:\path\to\input3" outputpath="drive:\path\to\output" outputfile="OutputGrid" width=480 cellwidth=32 cellheight=32 sigma=4.5 radius=2 resamplerid=1 skipalphapixel=1
+        //.\ImageFolderToGrid.exe program="imagesharp" inputpath="drive:\path\to\input;drive:\path\to\input2;drive:\path\to\input3" outputpath="drive:\path\to\output" outputfile="OutputGrid" width=480 cellwidth=32 cellheight=32 sigma=4.5 radius=2 resamplerid=1 skipalphapixel=0
 
         /// <summary>
         /// Using the supplied arguments, will recursively load all the images in all the semicolon separated folders, create a new image and put all the images in a grid manner, then save the new image to the output folder with the output name.
@@ -21,7 +21,7 @@ namespace ImageFolderToGrid.Programs {
         /// *sigma=4.5
         /// *radius=2
         /// *resamplerid=1
-        /// *skipalphapixel=1
+        /// *skipalphapixel=0
         /// See <see cref="GetResampler(int)"/> for more information on resamplers.
         /// </summary>
         /// <param name="arguments">Preprocessed arguments from the command line.</param>
@@ -100,7 +100,7 @@ namespace ImageFolderToGrid.Programs {
 
             int gridHeight = rows * cellHeight;
 
-            Image result = new Image<SixLabors.ImageSharp.PixelFormats.Rgba32>(imageWidth, gridHeight);
+            Image result = new Image<SixLabors.ImageSharp.PixelFormats.Rgba32>(imageWidth, gridHeight, Color.Black);
 
             SixLabors.ImageSharp.Processing.Processors.Transforms.IResampler resampler = GetResampler(resamplerId);
 
@@ -190,7 +190,7 @@ namespace ImageFolderToGrid.Programs {
                 Sigma = 4.5f;
                 Radius = 2;
                 ResamplerId = 1;
-                SkipAlphaPixel = true;
+                SkipAlphaPixel = false;
             }
 
             /// <summary>
